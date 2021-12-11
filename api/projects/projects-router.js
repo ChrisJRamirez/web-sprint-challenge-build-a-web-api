@@ -2,7 +2,7 @@
 const express = require("express");
 
 const Project = require("./projects-model");
-const {validateProjectId, validateProject} = require("./projects-middleware");
+const {validateProjectId, validateProject, validateProjectCompleted} = require("./projects-middleware");
 
 const router = express.Router();
 
@@ -41,11 +41,10 @@ router.post("/", validateProject, (req, res) => {
 })
 
 //[PUT] /api/projects/:id
-router.put("/:id", validateProjectId, validateProject, (req, res) => {
+// ** test 8/9 passing but not 10, or 10 passing but not 8/9
+router.put("/:id", validateProjectId, validateProjectCompleted, (req, res) => {
   const {id} = req.params;
   const changes = req.body;
-
-  
 
   Project.update(id, changes)
     .then(projects => {
@@ -57,7 +56,28 @@ router.put("/:id", validateProjectId, validateProject, (req, res) => {
         err: err.message
       })
     })
+});
+
+//[DELETE] /api/actions/:id
+router.delete("/:id", validateProjectId, (req, res) => {
+  const {id} = req.params
+    const projectTbd = Project.get(id)
+    Project.remove(id)
+      .then(() => {
+        res.status(200).json(projectTbd)
+      })
+      .catch(err => {
+        res.status(500).json({
+          message: "The project could not be removed",
+          err: err.message
+    })
+  })
 })
+
+
+
+
+
 
 
 module.exports = router;

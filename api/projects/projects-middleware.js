@@ -42,11 +42,23 @@ const validateProject = (req, res, next) => {
   }
 }
 
+const validateProjectCompleted = (req, res, next) => {
+  const changes = req.body
+  if(!changes){
+    res.status(400).json({
+      message: "Missing required fields"
+    })
+  }else{
+    next()
+  }
+}
+
 
 // export Middlewares
 module.exports = {
   logger,
   validateProjectId,
-  validateProject
+  validateProject,
+  validateProjectCompleted
 }
 
