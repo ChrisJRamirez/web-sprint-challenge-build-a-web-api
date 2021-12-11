@@ -24,6 +24,20 @@ router.get("/", (req, res) => {
 // [GET] /api/projects/:id
 router.get("/:id", validateProjectId, (req, res) => {
   res.status(200).json(req.projects)
+});
+
+// [POST] /api/projects
+router.post("/", validateProject, (req, res) => {
+  Project.insert(req.body)
+    .then(projects => {
+      res.status(201).json(projects)
+    })
+    .catch(err => {
+      res.status(500).json({
+        message: "Error adding the user",
+        err: err.message
+      })
+    })
 })
 
 module.exports = router;
