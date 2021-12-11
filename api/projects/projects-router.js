@@ -58,7 +58,7 @@ router.put("/:id", validateProjectId, validateProjectCompleted, (req, res) => {
     })
 });
 
-//[DELETE] /api/actions/:id
+// [DELETE] /api/actions/:id
 router.delete("/:id", validateProjectId, (req, res) => {
   const {id} = req.params
     const projectTbd = Project.get(id)
@@ -72,9 +72,21 @@ router.delete("/:id", validateProjectId, (req, res) => {
           err: err.message
     })
   })
+});
+
+// [GET] /api/projects/:id/actions
+router.get("/:id/actions", validateProjectId, (req, res) => {
+  const {id} = req.params
+  Project.getProjectActions(id)
+    .then(actions => {
+      res.status(200).json(actions)
+    })
+    .catch(() => {
+      res.status(500).json({
+        message: "The action for this project could not be retrieved"
+      })
+    })
 })
-
-
 
 
 
