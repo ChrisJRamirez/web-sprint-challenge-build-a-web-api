@@ -70,8 +70,8 @@ router.delete("/:id", validateProjectId, (req, res) => {
         res.status(500).json({
           message: "The project could not be removed",
           err: err.message
-    })
-  })
+       })
+      })
 });
 
 // [GET] /api/projects/:id/actions

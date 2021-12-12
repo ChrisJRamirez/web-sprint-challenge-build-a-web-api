@@ -60,6 +60,22 @@ router.put("/:id", validateActionId, validateAction, (req, res) => {
     })
 });
 
+// [DELETE] /api/actions/:id
+router.delete("/:id", validateActionId, (req, res) => {
+  const {id} = req.params
+  const actionTbd = Action.get(id)
+    Action.remove(id)
+    .then(() => {
+      res.status(200).json(actionTbd)
+    })
+    .catch(err => {
+      res.status(500).json({
+        message: "The action could not be removed",
+        err: err.message
+     })
+    })
+})
+
 
 
 
