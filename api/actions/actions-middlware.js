@@ -32,7 +32,8 @@ const validateActionId = async(req, res, next) => {
 };
 
 const validateAction = (req, res, next) => {
-  if(!req.body.project_id || !req.body.description || req.body.notes){
+  if(!req.body.project_id || !req.body.description || !req.body.notes){
+    console.log(req.body.project_id)
     res.status(400).json({
       message: "Missing required project_id, description, or notes fields"
     })
