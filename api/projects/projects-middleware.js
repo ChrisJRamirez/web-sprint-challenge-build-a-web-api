@@ -20,7 +20,6 @@ const validateProjectId = async(req, res, next) => {
         message: "Project with the given ID not found"
       })
     } else {
-      // should this be res.projects..?
         req.projects = projects
         next()
     }

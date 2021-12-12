@@ -6,7 +6,7 @@ const {validateProjectId, validateProject, validateProjectCompleted} = require("
 
 const router = express.Router();
 
-//Endpoints
+// Project Endpoints
 // [GET] /api/projects
 router.get("/", (req, res) => {
   Project.get(req.query.projects)
@@ -87,9 +87,5 @@ router.get("/:id/actions", validateProjectId, (req, res) => {
       })
     })
 })
-
-
-
-
 
 module.exports = router;
